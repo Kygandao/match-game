@@ -1,15 +1,15 @@
 import './App.css';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SingleCard from './components/SingleCard';
 
 //array of cards
 const cardImages = [
-  { 'src': '/images/chrome.png' },
-  { 'src': '/images/doll.png' },
-  { 'src': '/images/firefox.png' },
-  { 'src': '/images/icon.png' },
-  { 'src': '/images/line.png' },
-  { 'src': '/images/penguin.png' }
+  { 'src': '/images/emil.jpg' },
+  { 'src': '/images/matt.jpg' },
+  { 'src': '/images/nicholi.jpg' },
+  { 'src': '/images/sam.jpg' },
+  { 'src': '/images/tim.jpg' },
+  { 'src': '/images/tom.jpg' }
 ]
 
 function App() {
@@ -39,6 +39,28 @@ function App() {
   const handleChoice = (card) => {
     //if no value, update choice one //if value present, update choice two
     firstChoice ? setSecondChoice(card) : setFirstChoice(card)
+  }
+
+  //compare 2 cards selected
+  useEffect( () => {
+    //comparison
+    if (firstChoice && secondChoice) {
+
+      if (firstChoice.src === secondChoice.src) {
+        console.log('Cards Match!')
+        resetTurn()
+      } else {
+        console.log('Cards DONT Match!')
+        resetTurn()
+      }
+    }
+  }, [firstChoice, secondChoice])
+
+  //reset turn after player chooses two cards even if they don't match
+  const resetTurn = () => {
+    setFirstChoice(null)
+    setSecondChoice(null)
+    setTurns(prevTurns => prevTurns + 1)
   }
 
   return (

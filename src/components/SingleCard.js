@@ -17,7 +17,7 @@ const SingleCard = ({ card, handleChoice }) => {
                     alt='card front'
                     />
                 <img
-                    src='/images/cover.gif'
+                    src='/images/cover.jpg'
                     className='back'
                     onClick={handleClick}
                     alt='card back'
