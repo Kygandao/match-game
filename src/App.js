@@ -4,12 +4,12 @@ import SingleCard from './components/SingleCard';
 
 //array of cards
 const cardImages = [
-  { 'src': '/images/emil.jpg' },
-  { 'src': '/images/matt.jpg' },
-  { 'src': '/images/nicholi.jpg' },
-  { 'src': '/images/sam.jpg' },
-  { 'src': '/images/tim.jpg' },
-  { 'src': '/images/tom.jpg' }
+  { 'src': '/images/emil.jpg', matched: false },
+  { 'src': '/images/matt.jpg', matched: false },
+  { 'src': '/images/nicholi.jpg', matched: false },
+  { 'src': '/images/sam.jpg', matched: false },
+  { 'src': '/images/tim.jpg', matched: false },
+  { 'src': '/images/tom.jpg', matched: false }
 ]
 
 function App() {
@@ -45,16 +45,31 @@ function App() {
   useEffect( () => {
     //comparison
     if (firstChoice && secondChoice) {
-
+      ///if first choice src matches second choice src...
       if (firstChoice.src === secondChoice.src) {
-        console.log('Cards Match!')
+        //...then update the cards state...
+        setCards(prevCards => {
+          ///...returns new array based on prevCards array...
+          return prevCards.map(card => {
+            //..fire function for each card in the array...
+            if (card.src === firstChoice.src) {
+              //changing matched property to true if cards selected match
+              return {...card, matched: true}
+            } else {
+              //if no match, return cards unchanged
+              return card
+            }
+          })
+        })
         resetTurn()
       } else {
-        console.log('Cards DONT Match!')
+        
         resetTurn()
       }
     }
   }, [firstChoice, secondChoice])
+
+  console.log(cards)
 
   //reset turn after player chooses two cards even if they don't match
   const resetTurn = () => {
