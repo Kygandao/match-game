@@ -2,10 +2,14 @@ import React from 'react'
 import './SingleCard.css'
 
 //pass in card and handleChoice function as props from APP.JS
-const SingleCard = ({ card, handleChoice, flipped }) => {
+const SingleCard = ({ card, handleChoice, flipped, disabled }) => {
 
     const handleClick = () => {
-        handleChoice(card)
+        //check if card is disabled
+        //if not disabled, then we can select a card, if disabled, then it will not fire handleChoice function
+        if (!disabled) {
+            handleChoice(card)
+        }  
     }
 
     return (

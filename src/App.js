@@ -19,6 +19,7 @@ function App() {
   //player card choice
   const [firstChoice, setFirstChoice] = useState(null)
   const [secondChoice, setSecondChoice] = useState(null)
+  const [disabled, setDisabled] = useState(false)
 
 
   //shuffle cards function
@@ -30,6 +31,9 @@ function App() {
     //add id property to each image
     .map((card) => ({ ...card, id: Math.random() }))
 
+    //resets first and second choices when game starts
+    setFirstChoice(null)
+    setSecondChoice(null)
     //set new state of cards and turns taken
     setCards(shuffledCards)
     setTurns(0)
@@ -43,8 +47,10 @@ function App() {
 
   //compare 2 cards selected
   useEffect( () => {
-    //comparison
+    //card comparison
     if (firstChoice && secondChoice) {
+      //setting other cards to be disabled when user selects two
+      setDisabled(true)
       ///if first choice src matches second choice src...
       if (firstChoice.src === secondChoice.src) {
         //...then update the cards state...
@@ -76,7 +82,14 @@ function App() {
     setFirstChoice(null)
     setSecondChoice(null)
     setTurns(prevTurns => prevTurns + 1)
+    //once comparison is done, set disabled back to false
+    setDisabled(false)
   }
+
+  //start the game automatically
+  useEffect( () => {
+    shuffleCards()
+  }, [])
 
   return (
     <div className="App">
@@ -90,9 +103,11 @@ function App() {
             card={card}
             handleChoice={handleChoice}
             flipped={card === firstChoice || card === secondChoice || card.matched}
+            disabled={disabled}
             />
         ))}
       </div>
+      <p>Turns: {turns}</p>
     </div>
   );
 }
