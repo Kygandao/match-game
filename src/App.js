@@ -15,7 +15,7 @@ const cardImages = [
 function App() {
 
   const [cards, setCards] = useState([])
-  const [turns, setTurns] =useState(0)
+  const [turns, setTurns] = useState(0)
   //player card choice
   const [firstChoice, setFirstChoice] = useState(null)
   const [secondChoice, setSecondChoice] = useState(null)
@@ -63,8 +63,8 @@ function App() {
         })
         resetTurn()
       } else {
-        
-        resetTurn()
+        //delay restting turn to show non matched pair with 1000ms delay
+        setTimeout( () => resetTurn(), 1000)
       }
     }
   }, [firstChoice, secondChoice])
@@ -89,6 +89,7 @@ function App() {
             key={card.id}
             card={card}
             handleChoice={handleChoice}
+            flipped={card === firstChoice || card === secondChoice || card.matched}
             />
         ))}
       </div>
